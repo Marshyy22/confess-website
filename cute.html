@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Question</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            font-family: 'Arial', sans-serif;
+            color: white;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .question-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin: 0;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        p {
+            font-size: 1.5em;
+            margin: 20px 0;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        .heart {
+            font-size: 50px;
+            animation: bounce 1s infinite;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .answer-message {
+            margin-top: 20px;
+            font-size: 1.2em;
+            display: none; /* Hidden by default */
+            color: #ff69b4;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .heart-rain {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; /* Prevent interaction */
+            overflow: hidden;
+        }
+
+        .falling-heart {
+            position: absolute;
+            font-size: 30px;
+            color: red;
+            animation: fall linear forwards;
+            opacity: 0;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-100px);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="question-card">
+    <h1 class="heart">❤️</h1>
+    <p>Do you like me?</p>
+    <button class="answer-button" onclick="showAnswer()">Tell me!</button>
+    <div class="answer-message" id="answerMessage">I like you too'! ✨</div>
+</div>
+
+<div class="heart-rain" id="heartRain"></div>
+
+<script>
+    function showAnswer() {
+        const answerMessage = document.getElementById('answerMessage');
+        answerMessage.style.display = 'block'; // Show the answer message
+        startHeartRain(); // Start the heart rain animation
+    }
+
+    function startHeartRain() {
+        setInterval(() => {
+            createFallingHeart();
+        }, 300); // Create a new heart every 300ms
+    }
+
+    function createFallingHeart() {
+        const heartRain = document.getElementById('heartRain');
+        const heart = document.createElement('div');
+        heart.className = 'falling-heart';
+        heart.innerHTML = '❤️';
+        heart.style.left = `${Math.random() * 100}vw`; // Random horizontal position
+        heart.style.animationDuration = `${Math.random() * 2 + 3}s`; // Random fall speed
+        heartRain.appendChild(heart);
+
+        // Remove the heart after it falls
+        setTimeout(() => {
+            heart.remove();
+        }, 5000); // Remove heart after 5 seconds
+    }
+</script>
+
+</body>
+</html>
